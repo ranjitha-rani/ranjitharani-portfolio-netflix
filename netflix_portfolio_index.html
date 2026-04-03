@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ranjitha Rani — SWE in Making</title>
+<meta name="description" content="Ranjitha Rani — MS Computer Science, University of Oregon. Distributed systems, C/C++, Python, Go. Available Summer 2026.">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --red: #e50914;
+  --red-dark: #b00710;
+  --black: #0a0a0a;
+  --surface: #141414;
+  --surface2: #1f1f1f;
+  --surface3: #2a2a2a;
+  --white: #ffffff;
+  --muted: #a3a3a3;
+  --muted2: #6b6b6b;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.15);
+  --green: #46d369;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 400;
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* noise */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.5;
+}
+
+/* ── PROGRESS BAR ── */
+#prog {
+  position: fixed;
+  top: 0; left: 0;
+  height: 2px;
+  background: var(--red);
+  z-index: 200;
+  width: 0;
+  transition: width 0.1s linear;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 4rem;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.92) 0%, transparent 100%);
+  transition: background 0.3s;
+}
+nav.scrolled { background: rgba(10,10,10,0.97); backdrop-filter: blur(8px); }
+
+.nav-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2rem;
+  color: var(--red);
+  letter-spacing: 0.06em;
+  text-decoration: none;
+}
+
+.nav-links { display: flex; gap: 2rem; list-style: none; }
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: color 0.2s;
+}
+.nav-links a:hover { color: var(--white); }
+
+/* ── HERO ── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 4rem 5rem;
+  overflow: hidden;
+}
+
+.hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 55% at 65% 35%, rgba(229,9,20,0.13) 0%, transparent 65%),
+    radial-gradient(ellipse 45% 70% at 5% 85%, rgba(229,9,20,0.06) 0%, transparent 60%),
+    var(--black);
+}
+.hero-bg::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 65% 65% at 75% 25%, black 10%, transparent 75%);
+}
+
+.hero-eyebrow {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1.25rem;
+  animation: fadeUp 0.8s 0.15s both;
+}
+.nf-n {
+  background: var(--red);
+  color: #fff;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 0.85rem;
+  padding: 3px 9px;
+  letter-spacing: 0.06em;
+}
+.eyebrow-text {
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.hero-title {
+  position: relative;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(5rem, 13vw, 11.5rem);
+  line-height: 0.88;
+  letter-spacing: 0.02em;
+  margin-bottom: 0.5rem;
+  animation: fadeUp 0.8s 0.3s both;
+}
+.hero-title span { color: var(--red); }
+
+.hero-subtitle {
+  position: relative;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(1.4rem, 3.5vw, 3rem);
+  letter-spacing: 0.2em;
+  color: var(--muted);
+  margin-bottom: 1.75rem;
+  animation: fadeUp 0.8s 0.4s both;
+}
+
+.hero-meta {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 1.5rem;
+  animation: fadeUp 0.8s 0.45s both;
+  flex-wrap: wrap;
+}
+.match { color: var(--green); font-weight: 500; font-size: 0.875rem; }
+.pill {
+  border: 1px solid var(--muted2);
+  color: var(--muted);
+  font-size: 0.72rem;
+  padding: 2px 9px;
+}
+.dot { color: var(--muted2); font-size: 0.8rem; }
+
+.hero-desc {
+  position: relative;
+  max-width: 520px;
+  font-size: 0.975rem;
+  line-height: 1.75;
+  color: rgba(255,255,255,0.72);
+  margin-bottom: 2.5rem;
+  animation: fadeUp 0.8s 0.52s both;
+}
+
+.hero-actions {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  animation: fadeUp 0.8s 0.6s both;
+}
+
+.btn-p {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--white); color: var(--black);
+  font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 0.95rem;
+  padding: 0.75rem 2rem; border: none; cursor: pointer; text-decoration: none;
+  transition: background 0.2s, transform 0.1s;
+  letter-spacing: 0.02em;
+}
+.btn-p:hover { background: rgba(255,255,255,0.87); transform: scale(0.99); }
+
+.btn-s {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: rgba(100,100,100,0.55); color: var(--white);
+  font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 0.95rem;
+  padding: 0.75rem 2rem; border: none; cursor: pointer; text-decoration: none;
+  transition: background 0.2s;
+  letter-spacing: 0.02em;
+}
+.btn-s:hover { background: rgba(100,100,100,0.38); }
+
+.scroll-hint {
+  position: absolute;
+  bottom: 2.5rem; right: 4rem;
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  opacity: 0.35;
+  animation: fadeUp 1s 1.2s both;
+}
+.scroll-line {
+  width: 1px; height: 44px;
+  background: linear-gradient(to bottom, transparent, var(--white));
+  animation: spulse 2.2s infinite;
+}
+.scroll-label {
+  font-size: 0.6rem; letter-spacing: 0.18em;
+  text-transform: uppercase; writing-mode: vertical-rl;
+}
+
+/* ── SECTIONS ── */
+section { padding: 5rem 4rem; }
+
+.sec-eyebrow {
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 2.5rem;
+}
+.sec-label {
+  font-size: 0.68rem; letter-spacing: 0.28em;
+  text-transform: uppercase; color: var(--muted2); font-weight: 500;
+  white-space: nowrap;
+}
+.sec-line { flex: 1; height: 1px; background: var(--border); }
+
+.sec-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(2.2rem, 4.5vw, 3.75rem);
+  letter-spacing: 0.04em;
+  margin-bottom: 1rem;
+  line-height: 1;
+}
+
+/* ── ABOUT ── */
+#about { background: var(--black); }
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+.about-text { font-size: 0.975rem; line-height: 1.8; color: rgba(255,255,255,0.78); }
+.about-text p + p { margin-top: 1.2rem; }
+.hl { color: var(--white); font-weight: 500; }
+
+.stats-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1px; background: var(--border);
+}
+.stat-card { background: var(--surface); padding: 2rem; }
+.stat-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 3.25rem; color: var(--red);
+  line-height: 1; margin-bottom: 6px;
+}
+.stat-label {
+  font-size: 0.75rem; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted2); font-weight: 500;
+}
+
+/* ── SKILLS ── */
+#skills { background: var(--surface); }
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1px; background: var(--border);
+}
+.skill-cat {
+  background: var(--surface2);
+  padding: 1.75rem;
+  position: relative; overflow: hidden;
+  transition: background 0.2s;
+}
+.skill-cat::before {
+  content: '';
+  position: absolute; top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--red);
+  transform: scaleY(0); transform-origin: top;
+  transition: transform 0.3s;
+}
+.skill-cat:hover { background: var(--surface3); }
+.skill-cat:hover::before { transform: scaleY(1); }
+
+.skill-cat-title {
+  font-size: 0.68rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--red);
+  font-weight: 500; margin-bottom: 1rem;
+}
+.skill-items { display: flex; flex-direction: column; gap: 6px; }
+.skill-item {
+  font-size: 0.8rem; color: var(--muted);
+  font-family: 'DM Mono', monospace;
+}
+
+/* ── EDUCATION ── */
+#education { background: var(--black); }
+
+.edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+.edu-card {
+  border: 1px solid var(--border);
+  padding: 2rem;
+  transition: border-color 0.2s;
+}
+.edu-card:hover { border-color: var(--border2); }
+.edu-year {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem; color: var(--red);
+  letter-spacing: 0.12em; margin-bottom: 0.75rem;
+}
+.edu-degree {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.35rem; letter-spacing: 0.05em; margin-bottom: 4px;
+}
+.edu-uni { font-size: 0.875rem; color: var(--muted); margin-bottom: 1rem; }
+.edu-courses {
+  font-size: 0.78rem; color: var(--muted2);
+  line-height: 1.7; font-family: 'DM Mono', monospace;
+}
+.edu-thesis {
+  margin-top: 1rem; padding: 0.875rem;
+  background: rgba(229,9,20,0.07);
+  border-left: 2px solid var(--red);
+}
+.edu-thesis-label {
+  font-size: 0.63rem; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--red);
+  font-weight: 500; margin-bottom: 5px;
+}
+.edu-thesis-title {
+  font-size: 0.82rem; color: rgba(255,255,255,0.85);
+  line-height: 1.55; font-style: italic;
+}
+
+/* ── SEASONS ── */
+#seasons { background: var(--surface); }
+
+.seasons-intro {
+  max-width: 560px; font-size: 0.925rem;
+  color: var(--muted); line-height: 1.7; margin-bottom: 3rem;
+}
+
+.season-list { display: flex; flex-direction: column; gap: 2px; }
+
+.season {
+  display: grid;
+  grid-template-columns: 72px 220px 1fr auto;
+  align-items: center;
+  gap: 2rem;
+  padding: 1.5rem 1.75rem;
+  background: var(--surface2);
+  border-left: 3px solid transparent;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+  position: relative; overflow: hidden;
+}
+.season::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(90deg, rgba(229,9,20,0.06) 0%, transparent 50%);
+  opacity: 0; transition: opacity 0.3s;
+}
+.season:hover { background: var(--surface3); border-left-color: var(--red); }
+.season:hover::before { opacity: 1; }
+.season.open { background: var(--surface3); border-left-color: var(--red); }
+.season.open::before { opacity: 1; }
+
+.s-num {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 2.2rem; color: var(--muted2);
+  line-height: 1; letter-spacing: 0.05em;
+}
+
+.s-thumb {
+  width: 220px; height: 124px;
+  background: var(--surface3);
+  position: relative; overflow: hidden; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+}
+.s-thumb-label {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1rem; letter-spacing: 0.12em;
+  color: var(--muted2); position: relative; z-index: 1;
+  text-align: center; padding: 0 12px;
+}
+.s-thumb::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(229,9,20,0.18) 0%, transparent 55%);
+}
+.s-thumb-tag {
+  position: absolute; bottom: 8px; right: 8px;
+  background: var(--black);
+  font-size: 0.62rem; letter-spacing: 0.1em;
+  padding: 2px 7px; color: var(--white);
+  font-family: 'DM Mono', monospace;
+}
+
+.s-body { flex: 1; }
+
+.s-title-row {
+  display: flex; align-items: baseline;
+  gap: 12px; margin-bottom: 8px; flex-wrap: wrap;
+}
+.s-name { font-size: 0.975rem; font-weight: 500; color: var(--white); }
+
+.s-badge {
+  font-size: 0.67rem; letter-spacing: 0.08em;
+  text-transform: uppercase; padding: 2px 9px; font-weight: 500;
+}
+.badge-progress { background: rgba(229,9,20,0.15); color: var(--red); }
+.badge-done { background: rgba(70,211,105,0.13); color: var(--green); }
+.badge-published { background: rgba(255,255,255,0.07); color: var(--muted); }
+
+.s-desc {
+  font-size: 0.875rem; color: var(--muted);
+  line-height: 1.65; max-width: 560px;
+  display: none;
+  margin-bottom: 10px;
+}
+.season.open .s-desc { display: block; }
+
+.s-bullets {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+.season.open .s-bullets { display: flex; }
+.s-bullet {
+  font-size: 0.82rem; color: rgba(255,255,255,0.65);
+  line-height: 1.6; padding-left: 14px; position: relative;
+}
+.s-bullet::before {
+  content: '—';
+  position: absolute; left: 0;
+  color: var(--red); font-size: 0.75rem;
+}
+
+.s-stack {
+  display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px;
+}
+.s-tag {
+  font-size: 0.68rem; font-family: 'DM Mono', monospace;
+  color: var(--muted2); border: 1px solid var(--border);
+  padding: 2px 9px; letter-spacing: 0.04em;
+}
+
+.s-dur {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.78rem; color: var(--muted2);
+  white-space: nowrap; align-self: flex-start;
+  padding-top: 4px;
+}
+
+/* ── PUBLICATION ── */
+#publication { background: var(--black); padding: 4rem; }
+.pub-card {
+  display: flex; align-items: center; gap: 2rem;
+  padding: 2rem; border: 1px solid var(--border);
+  max-width: 760px; transition: border-color 0.2s;
+}
+.pub-card:hover { border-color: var(--border2); }
+.pub-badge {
+  flex-shrink: 0; width: 56px; height: 56px;
+  background: var(--red);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.05rem; letter-spacing: 0.06em;
+}
+.pub-venue {
+  font-size: 0.68rem; letter-spacing: 0.18em;
+  text-transform: uppercase; color: var(--red); margin-bottom: 6px; font-weight: 500;
+}
+.pub-title { font-size: 0.975rem; font-weight: 500; color: var(--white); line-height: 1.45; }
+.pub-year {
+  font-size: 0.78rem; color: var(--muted2);
+  margin-top: 6px; font-family: 'DM Mono', monospace;
+}
+
+/* ── CONTACT ── */
+#contact {
+  background: var(--black);
+  padding: 7rem 4rem;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+#contact::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse 55% 55% at 50% 110%, rgba(229,9,20,0.12) 0%, transparent 70%);
+}
+.contact-title {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: clamp(3rem, 8vw, 7rem);
+  letter-spacing: 0.04em;
+  position: relative; margin-bottom: 1rem;
+  line-height: 0.95;
+}
+.contact-sub {
+  font-size: 0.975rem; color: var(--muted);
+  margin-bottom: 3rem; position: relative;
+}
+.contact-links {
+  display: flex; justify-content: center;
+  gap: 1.25rem; position: relative; flex-wrap: wrap;
+}
+.c-link {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 0.75rem 1.75rem;
+  border: 1px solid var(--border2);
+  color: var(--white); text-decoration: none;
+  font-size: 0.82rem; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase;
+  transition: background 0.2s, border-color 0.2s;
+}
+.c-link:hover { background: rgba(255,255,255,0.07); }
+.c-link.primary { background: var(--red); border-color: var(--red); }
+.c-link.primary:hover { background: var(--red-dark); border-color: var(--red-dark); }
+
+/* ── FOOTER ── */
+footer {
+  background: var(--surface);
+  padding: 1.75rem 4rem;
+  display: flex; justify-content: space-between; align-items: center;
+  border-top: 1px solid var(--border);
+}
+.footer-logo {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 1.5rem; color: var(--red); letter-spacing: 0.06em;
+}
+.footer-copy {
+  font-size: 0.78rem; color: var(--muted2);
+  font-family: 'DM Mono', monospace;
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes spulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(1); }
+  50%       { opacity: 0.9; transform: scaleY(1.15); }
+}
+
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 960px) {
+  nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  .hero { padding: 0 1.5rem 4rem; }
+  section { padding: 3.5rem 1.5rem; }
+  .about-grid { grid-template-columns: 1fr; }
+  .edu-grid { grid-template-columns: 1fr; }
+  .season { grid-template-columns: 48px 1fr auto; }
+  .s-thumb { display: none; }
+  footer { flex-direction: column; gap: 1rem; text-align: center; }
+  #publication, #contact { padding: 3.5rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo" style="font-size:1.1rem;letter-spacing:0.12em;">JACK OF ALL TRADES</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#education">Origin Story</a></li>
+    <li><a href="#seasons">Seasons</a></li>
+    <li><a href="#publication">Publication</a></li>
+    <li><a href="#contact">Connect</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-bg"></div>
+
+  <div class="hero-eyebrow">
+    <span class="nf-n">N</span>
+    <span class="eyebrow-text">Original Series &nbsp;·&nbsp; MS Computer Science &nbsp;·&nbsp; University of Oregon</span>
+  </div>
+
+  <h1 class="hero-title">RANJITHA<br><span>RANI</span></h1>
+  <div class="hero-subtitle">SWE &nbsp; IN &nbsp; MAKING</div>
+
+  <div class="hero-meta">
+    <span class="match">97% Match</span>
+    <span class="dot">·</span>
+    <span class="pill">2026</span>
+    <span class="dot">·</span>
+    <span class="pill">6 Seasons</span>
+    <span class="dot">·</span>
+    <span style="font-size:0.82rem;color:var(--muted)">Distributed Systems &nbsp;·&nbsp; C/C++ &nbsp;·&nbsp; Python &nbsp;·&nbsp; Go</span>
+  </div>
+
+  <p class="hero-desc">
+    From Bengaluru to the Pacific Northwest — an engineer who builds distributed systems, rewrites consensus protocols, and treats every edge case like a production incident. Six seasons. One through-line: code that holds under pressure.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#about" class="btn-p"><span>▶</span> Watch Now</a>
+    <a href="#seasons" class="btn-s"><span>⊕</span> See All Seasons</a>
+  </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    <span class="scroll-label">Scroll</span>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="sec-eyebrow reveal">
+    <span class="sec-label">About</span>
+    <div class="sec-line"></div>
+  </div>
+  <div class="about-grid">
+    <div>
+      <h2 class="sec-title reveal">The engineer<br>behind the stack</h2>
+      <div class="about-text reveal">
+        <p>I'm a <span class="hl">Master's student in Computer Science at the University of Oregon</span>, originally from Bengaluru, India. I completed my B.Tech at PES University before crossing the world to work on problems that don't have textbook answers.</p>
+        <p>My thesis is building <span class="hl">SAM CFT</span> — a novel crash fault tolerance protocol for disaggregated memory using RDMA. It sits at the intersection of distributed systems, hardware architecture, and consensus theory. That's the kind of intersection I like.</p>
+        <p>I work across the full stack — from <span class="hl">low-level C/C++ memory protocols</span> to cloud-native Kubernetes infrastructure to React frontends. JavaScript, TypeScript, Java, Go, Python — whatever the system needs.</p>
+        <p>Looking for <span class="hl">Summer 2026 internships</span> where the problems are hard and the systems actually matter.</p>
+      </div>
+    </div>
+    <div class="stats-grid reveal">
+      <div class="stat-card">
+        <div class="stat-num">6</div>
+        <div class="stat-label">Projects shipped</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">1</div>
+        <div class="stat-label">IEEE publication</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">MS</div>
+        <div class="stat-label">CS in progress</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">2026</div>
+        <div class="stat-label">Available</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="sec-eyebrow reveal">
+    <span class="sec-label">Skills</span>
+    <div class="sec-line"></div>
+  </div>
+  <h2 class="sec-title reveal">The stack</h2>
+  <div class="skills-grid">
+    <div class="skill-cat reveal">
+      <div class="skill-cat-title">Languages</div>
+      <div class="skill-items">
+        <span class="skill-item">JavaScript · TypeScript</span>
+        <span class="skill-item">Java · C / C++</span>
+        <span class="skill-item">Python · Go</span>
+        <span class="skill-item">SQL · Bash</span>
+        <span class="skill-item">HTML · CSS</span>
+      </div>
+    </div>
+    <div class="skill-cat reveal">
+      <div class="skill-cat-title">Frontend</div>
+      <div class="skill-items">
+        <span class="skill-item">React · Flutter</span>
+        <span class="skill-item">TypeScript</span>
+        <span class="skill-item">Responsive Design</span>
+        <span class="skill-item">UX Fundamentals</span>
+      </div>
+    </div>
+    <div class="skill-cat reveal">
+      <div class="skill-cat-title">API & Integration</div>
+      <div class="skill-items">
+        <span class="skill-item">RESTful APIs</span>
+        <span class="skill-item">GraphQL · gRPC</span>
+        <span class="skill-item">Third-Party Services</span>
+        <span class="skill-item">Vendor Solutions</span>
+      </div>
+    </div>
+    <div class="skill-cat reveal">
+      <div class="skill-cat-title">Databases</div>
+      <div class="skill-items">
+        <span class="skill-item">PostgreSQL · MySQL</span>
+        <span class="skill-item">DynamoDB · MariaDB</span>
+        <span class="skill-item">Schema Design</span>
+        <span class="skill-item">Query Optimization</span>
+      </div>
+    </div>
+    <div class="skill-cat reveal">
+      <div class="skill-cat-title">Cloud & Observability</div>
+      <div class="skill-items">
+        <span class="skill-item">AWS (EC2, RDS, Lambda…)</span>
+        <span class="skill-item">Docker · Kubernetes</span>
+        <span class="skill-item">Prometheus · Grafana</span>
+        <span class="skill-item">SLO Monitoring · CI/CD</span>
+      </div>
+    </div>
+    <div class="skill-cat reveal">
+      <div class="skill-cat-title">Concepts</div>
+      <div class="skill-items">
+        <span class="skill-item">Distributed Systems</span>
+        <span class="skill-item">Microservices · Platform Eng.</span>
+        <span class="skill-item">Generative AI · OOP</span>
+        <span class="skill-item">Operational Excellence</span>
+        <span class="skill-item">SDLC · Agile</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION / ORIGIN STORY -->
+<section id="education">
+  <div class="sec-eyebrow reveal">
+    <span class="sec-label">Education</span>
+    <div class="sec-line"></div>
+  </div>
+  <h2 class="sec-title reveal">Origin story</h2>
+  <div class="edu-grid">
+    <div class="edu-card reveal">
+      <div class="edu-year">SEP 2024 – PRESENT</div>
+      <div class="edu-degree">Master of Science<br>Computer Science</div>
+      <div class="edu-uni">University of Oregon · Eugene, USA</div>
+      <div class="edu-courses">Algorithms &amp; Complexity · Database Processing · Data Mining · Data Science · Large Scale Systems · Probabilistic Methods in AI · GPU Programming</div>
+      <div class="edu-thesis">
+        <div class="edu-thesis-label">Thesis</div>
+        <div class="edu-thesis-title">SAM CFT – Crash Fault Tolerance for Shared Append-only Memory using RDMA &nbsp;(in progress)</div>
+      </div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-year">AUG 2020 – MAY 2024</div>
+      <div class="edu-degree">Bachelor of Technology<br>Computer Science</div>
+      <div class="edu-uni">PES University · Bengaluru, India</div>
+      <div class="edu-courses">Data Structures · Algorithms · Operating Systems · DBMS · Software Engineering · Cloud Computing · Data Analytics · Big Data · Web Development · Networks</div>
+    </div>
+  </div>
+</section>
+
+<!-- SEASONS -->
+<section id="seasons">
+  <div class="sec-eyebrow reveal">
+    <span class="sec-label">Seasons</span>
+    <div class="sec-line"></div>
+  </div>
+  <h2 class="sec-title reveal">All Seasons</h2>
+  <p class="seasons-intro reveal">Six seasons. One through-line: systems that hold under pressure, protocols that outlive the bugs, and code that ships.</p>
+
+  <div class="season-list">
+
+    <!-- S1 -->
+    <div class="season reveal" onclick="toggleSeason(this)">
+      <div class="s-num">S1</div>
+      <div class="s-thumb">
+        <div class="s-thumb-label">Personal Portfolio</div>
+        <div class="s-thumb-tag">FULL STACK</div>
+      </div>
+      <div class="s-body">
+        <div class="s-title-row">
+          <span class="s-name">Personal Portfolio — Full-Stack Web Application</span>
+          <span class="s-badge badge-done">Completed</span>
+        </div>
+        <div class="s-desc">A React and TypeScript single-page application built from scratch. RESTful API integration, component-based architecture, UX-first design. Third-party service and vendor integration baked in — the kind of frontend that doesn't apologise for being engineered.</div>
+        <div class="s-bullets">
+          <div class="s-bullet">Designed and built a React and TypeScript SPA with RESTful API integration, component-based architecture, and UX-first design — demonstrating end-to-end full-stack ownership from ideation through deployment.</div>
+          <div class="s-bullet">Implemented responsive UI with clean OOP JavaScript class patterns, ensuring consistent UX across devices following modern design patterns and frontend best practices.</div>
+          <div class="s-bullet">Integrated third-party services and APIs into the platform layer, maintaining scalability and flexibility analogous to hybrid vendor-integrated architectures.</div>
+        </div>
+        <div class="s-stack">
+          <span class="s-tag">React</span><span class="s-tag">TypeScript</span><span class="s-tag">JavaScript</span><span class="s-tag">HTML/CSS</span><span class="s-tag">REST APIs</span>
+        </div>
+      </div>
+      <div class="s-dur">Full Stack</div>
+    </div>
+
+    <!-- S2 -->
+    <div class="season reveal" onclick="toggleSeason(this)">
+      <div class="s-num">S2</div>
+      <div class="s-thumb">
+        <div class="s-thumb-label">Insurance System</div>
+        <div class="s-thumb-tag">FULL STACK</div>
+      </div>
+      <div class="s-body">
+        <div class="s-title-row">
+          <span class="s-name">Insurance Management System — Full-Stack Platform</span>
+          <span class="s-badge badge-done">Completed</span>
+        </div>
+        <div class="s-desc">Java backend services, GraphQL + RESTful APIs, JavaScript/TypeScript frontend. A production-ready member management system with normalized PostgreSQL/MySQL schema, indexing strategies, query optimization, and real-time multi-user access.</div>
+        <div class="s-bullets">
+          <div class="s-bullet">Built a full-stack platform with Java backend services, GraphQL and RESTful APIs, and a JavaScript/TypeScript frontend — delivering a scalable, maintainable member management system with real-time data access.</div>
+          <div class="s-bullet">Designed normalized DB schema, indexing strategies, and query optimization in PostgreSQL and MySQL, supporting efficient metadata management and multi-user operational workflows.</div>
+          <div class="s-bullet">Integrated internal backend services with a web frontend using modern design patterns and OOP principles, delivering a production-ready hybrid platform supporting end-to-end lifecycle management.</div>
+        </div>
+        <div class="s-stack">
+          <span class="s-tag">Java</span><span class="s-tag">JavaScript</span><span class="s-tag">TypeScript</span><span class="s-tag">PostgreSQL</span><span class="s-tag">MySQL</span><span class="s-tag">GraphQL</span><span class="s-tag">REST</span>
+        </div>
+      </div>
+      <div class="s-dur">Full Stack</div>
+    </div>
+
+    <!-- S3 -->
+    <div class="season reveal" onclick="toggleSeason(this)">
+      <div class="s-num">S3</div>
+      <div class="s-thumb">
+        <div class="s-thumb-label">µScale</div>
+        <div class="s-thumb-tag">CLOUD INFRA</div>
+      </div>
+      <div class="s-body">
+        <div class="s-title-row">
+          <span class="s-name">µScale — Scalable Platform Engineering &amp; Observability Suite</span>
+          <span class="s-badge badge-published">IEEE Published</span>
+        </div>
+        <div class="s-desc">A cloud-native platform layer on AWS with Kubernetes orchestration. SLO-aligned Prometheus + Grafana observability pipelines. CI/CD delivery automation. Real-time latency, throughput, and autoscaling insights. The kind of infrastructure most engineers only read papers about — she published one.</div>
+        <div class="s-bullets">
+          <div class="s-bullet">Architected a cloud-native platform layer on AWS with Kubernetes orchestration, building abstraction layers for microservice workload generation and service mesh integration at scale.</div>
+          <div class="s-bullet">Built SLO-aligned observability pipelines using Prometheus and Grafana, monitoring reliability, latency, and throughput — enabling rapid debugging of production issues across multiple service levels.</div>
+          <div class="s-bullet">Delivered CI/CD build tooling and delivery automation scripts, driving operational efficiency and reliability across dynamic distributed environments through iterative releases.</div>
+        </div>
+        <div class="s-stack">
+          <span class="s-tag">Python</span><span class="s-tag">Go</span><span class="s-tag">Docker</span><span class="s-tag">Kubernetes</span><span class="s-tag">AWS</span><span class="s-tag">Prometheus</span><span class="s-tag">Grafana</span><span class="s-tag">Kafka</span>
+        </div>
+      </div>
+      <div class="s-dur">Cloud Infra</div>
+    </div>
+
+    <!-- S4 -->
+    <div class="season reveal" onclick="toggleSeason(this)">
+      <div class="s-num">S4</div>
+      <div class="s-thumb">
+        <div class="s-thumb-label">Subsea GNNs</div>
+        <div class="s-thumb-tag">AI / ML</div>
+      </div>
+      <div class="s-body">
+        <div class="s-title-row">
+          <span class="s-name">Subsea Cable Route Redundancy using GNNs</span>
+          <span class="s-badge badge-done">Completed</span>
+        </div>
+        <div class="s-desc">GraphSAGE on global submarine cable topologies. AI-driven intelligent failover. Geospatial feature extraction. A resilience framework for the infrastructure carrying 99% of the world's internet traffic. The most distinctive project in any SWE portfolio.</div>
+        <div class="s-bullets">
+          <div class="s-bullet">Built a GenAI and ML application using Graph Neural Networks (GraphSAGE) to model large-scale network metadata, classify route redundancy, and enable AI-driven intelligent failover.</div>
+          <div class="s-bullet">Designed metadata management pipelines extracting geospatial and topological features, demonstrating experience building scalable systems that integrate AI capabilities into operational decision-making workflows.</div>
+        </div>
+        <div class="s-stack">
+          <span class="s-tag">Python</span><span class="s-tag">PyTorch</span><span class="s-tag">GraphSAGE</span><span class="s-tag">Generative AI</span><span class="s-tag">Geospatial Analytics</span>
+        </div>
+      </div>
+      <div class="s-dur">AI / ML</div>
+    </div>
+
+    <!-- S5 -->
+    <div class="season reveal" onclick="toggleSeason(this)">
+      <div class="s-num">S5</div>
+      <div class="s-thumb">
+        <div class="s-thumb-label">Mini-Spanner</div>
+        <div class="s-thumb-tag">DISTRIBUTED</div>
+      </div>
+      <div class="s-body">
+        <div class="s-title-row">
+          <span class="s-name">Mini-Spanner — Distributed Systems Platform</span>
+          <span class="s-badge badge-done">Completed</span>
+        </div>
+        <div class="s-desc">Google Spanner, built from scratch. Sharded replication. Three-Phase Commit over PBFT. Proof of Execution for integrity validation. Automated incident response workflows. Benchmarked under synthetic failures until it held.</div>
+        <div class="s-bullets">
+          <div class="s-bullet">Designed a scalable, resilient distributed platform with sharded replication and Three-Phase Commit (3PC) over PBFT — strong consistency and fault tolerance analogous to AWS multi-region distributed deployment.</div>
+          <div class="s-bullet">Advocated for reliability and operational excellence through Proof of Execution (PoE) integrity validation and automated incident response workflows, holding a high bar for correctness under concurrent access and failure scenarios.</div>
+        </div>
+        <div class="s-stack">
+          <span class="s-tag">Go</span><span class="s-tag">Java</span><span class="s-tag">C++</span><span class="s-tag">Python</span><span class="s-tag">SQL</span><span class="s-tag">Raft / PBFT</span><span class="s-tag">3PC</span><span class="s-tag">Sharding</span>
+        </div>
+      </div>
+      <div class="s-dur">Systems</div>
+    </div>
+
+    <!-- S6 -->
+    <div class="season reveal" onclick="toggleSeason(this)">
+      <div class="s-num">S6</div>
+      <div class="s-thumb">
+        <div class="s-thumb-label">SAM CFT</div>
+        <div class="s-thumb-tag">THESIS</div>
+      </div>
+      <div class="s-body">
+        <div class="s-title-row">
+          <span class="s-name">SAM CFT — Crash Fault Tolerance for Shared Append-only Memory</span>
+          <span class="s-badge badge-progress">In Progress</span>
+        </div>
+        <div class="s-desc">A novel real-time fault tolerance protocol in C/C++ using RDMA. Minimal coordination cost. High reliability. Single-leader commits in one write. Multi-leader with concurrent appends and background ordering. Nobody had built this. She is.</div>
+        <div class="s-bullets">
+          <div class="s-bullet">Designing a novel real-time fault tolerance protocol in C/C++ using RDMA, achieving minimal coordination cost and high reliability — deep systems expertise underpinning platform-level resilience.</div>
+          <div class="s-bullet">Owning end-to-end algorithm design, implementation, and validation with a high bar for correctness, reliability, and performance across multiple development iterations.</div>
+        </div>
+        <div class="s-stack">
+          <span class="s-tag">C/C++</span><span class="s-tag">RDMA</span><span class="s-tag">Distributed Systems</span><span class="s-tag">Real-Time Systems</span><span class="s-tag">Linux</span>
+        </div>
+      </div>
+      <div class="s-dur">MS Thesis</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- PUBLICATION -->
+<section id="publication">
+  <div class="sec-eyebrow reveal">
+    <span class="sec-label">Publication</span>
+    <div class="sec-line"></div>
+  </div>
+  <div class="pub-card reveal">
+    <div class="pub-badge">IEEE</div>
+    <div>
+      <div class="pub-venue">IEEE ICITEICS 2024</div>
+      <div class="pub-title">Synthetic to Real-world: Insights on Microservice-based Application</div>
+      <div class="pub-year">2024 · Conference Paper</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <h2 class="contact-title reveal">CAST HER<br>IN YOUR EPISODE</h2>
+  <p class="contact-sub reveal">Available for Summer 2026 internships &nbsp;·&nbsp; Eugene, OR</p>
+  <div class="contact-links reveal">
+    <a href="mailto:ranjitharani2001@gmail.com" class="c-link primary">✉ Get in Touch</a>
+    <a href="https://linkedin.com/in/g-ranjitha-rani-b8677b236" target="_blank" rel="noopener" class="c-link">LinkedIn</a>
+    <a href="mailto:granjith@uoregon.edu" class="c-link">UO Email</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">RR</div>
+  <div class="footer-copy">© 2026 Ranjitha Rani &nbsp;·&nbsp; SWE in Making — building systems that hold under pressure</div>
+</footer>
+
+<script>
+  // Progress bar
+  window.addEventListener('scroll', () => {
+    const h = document.documentElement;
+    const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+    document.getElementById('prog').style.width = pct + '%';
+    document.getElementById('nav').classList.toggle('scrolled', h.scrollTop > 60);
+  });
+
+  // Reveal on scroll
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 70);
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Season toggle
+  function toggleSeason(el) {
+    const wasOpen = el.classList.contains('open');
+    document.querySelectorAll('.season').forEach(s => s.classList.remove('open'));
+    if (!wasOpen) el.classList.add('open');
+  }
+</script>
+</body>
+</html>
