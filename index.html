@@ -5,21 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Ranjitha Rani — SWE in Making</title>
 <meta name="description" content="Ranjitha Rani — MS Computer Science, University of Oregon. Distributed systems, C/C++, Python, Go. Available Summer 2026.">
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Mono:wght@400;500&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --red: #e50914;
-  --red-dark: #b00710;
-  --black: #0a0a0a;
-  --surface: #141414;
-  --surface2: #1f1f1f;
-  --surface3: #2a2a2a;
-  --white: #ffffff;
-  --muted: #a3a3a3;
-  --muted2: #6b6b6b;
-  --border: rgba(255,255,255,0.08);
-  --border2: rgba(255,255,255,0.15);
-  --green: #46d369;
+  --blue:       #113cfc;
+  --blue-mid:   #1a4fff;
+  --blue-dark:  #0a1a6e;
+  --cyan:       #00d4ff;
+  --cyan-soft:  #00b8d9;
+  --hulu:       #1ce783;
+  --hulu-soft:  rgba(28,231,131,0.15);
+  --hulu-border:rgba(28,231,131,0.28);
+  --black:      #060b14;
+  --surface:    #0d1424;
+  --surface2:   #111a2e;
+  --surface3:   #172038;
+  --white:      #f0f4ff;
+  --muted:      #7b90b8;
+  --muted2:     #445577;
+  --border:     rgba(100,140,255,0.1);
+  --border2:    rgba(100,140,255,0.22);
+  --glow:       rgba(0,212,255,0.12);
+  --glow2:      rgba(17,60,252,0.18);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,32 +35,46 @@ html { scroll-behavior: smooth; }
 body {
   background: var(--black);
   color: var(--white);
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 400;
   overflow-x: hidden;
-  line-height: 1.6;
+  line-height: 1.65;
 }
 
-/* noise */
+/* stars bg */
 body::before {
   content: '';
-  position: fixed;
-  inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  position: fixed; inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,0.55) 0%, transparent 0%),
+    radial-gradient(1px 1px at 34% 7%,  rgba(255,255,255,0.35) 0%, transparent 0%),
+    radial-gradient(1px 1px at 56% 23%, rgba(255,255,255,0.45) 0%, transparent 0%),
+    radial-gradient(1px 1px at 78% 11%, rgba(255,255,255,0.5)  0%, transparent 0%),
+    radial-gradient(1px 1px at 91% 35%, rgba(255,255,255,0.4)  0%, transparent 0%),
+    radial-gradient(1px 1px at 22% 44%, rgba(255,255,255,0.3)  0%, transparent 0%),
+    radial-gradient(1px 1px at 67% 52%, rgba(255,255,255,0.35) 0%, transparent 0%),
+    radial-gradient(1px 1px at 44% 61%, rgba(255,255,255,0.25) 0%, transparent 0%),
+    radial-gradient(1px 1px at 5%  72%, rgba(255,255,255,0.4)  0%, transparent 0%),
+    radial-gradient(1px 1px at 83% 68%, rgba(255,255,255,0.3)  0%, transparent 0%),
+    radial-gradient(1px 1px at 29% 83%, rgba(255,255,255,0.35) 0%, transparent 0%),
+    radial-gradient(1px 1px at 60% 88%, rgba(255,255,255,0.2)  0%, transparent 0%),
+    radial-gradient(1.5px 1.5px at 48% 4%,  rgba(0,212,255,0.6) 0%, transparent 0%),
+    radial-gradient(1.5px 1.5px at 88% 55%, rgba(0,212,255,0.5) 0%, transparent 0%),
+    radial-gradient(1.5px 1.5px at 15% 91%, rgba(0,212,255,0.4) 0%, transparent 0%);
   pointer-events: none;
-  z-index: 9999;
-  opacity: 0.5;
+  z-index: 0;
+  opacity: 0.9;
 }
 
 /* ── PROGRESS BAR ── */
 #prog {
-  position: fixed;
-  top: 0; left: 0;
+  position: fixed; top: 0; left: 0;
   height: 2px;
-  background: var(--red);
+  background: linear-gradient(90deg, var(--blue), var(--cyan));
   z-index: 200;
   width: 0;
   transition: width 0.1s linear;
+  box-shadow: 0 0 8px var(--cyan);
 }
 
 /* ── NAV ── */
@@ -65,17 +86,23 @@ nav {
   align-items: center;
   justify-content: space-between;
   padding: 1.25rem 4rem;
-  background: linear-gradient(to bottom, rgba(0,0,0,0.92) 0%, transparent 100%);
-  transition: background 0.3s;
+  background: linear-gradient(to bottom, rgba(6,11,20,0.96) 0%, transparent 100%);
+  transition: background 0.35s;
 }
-nav.scrolled { background: rgba(10,10,10,0.97); backdrop-filter: blur(8px); }
+nav.scrolled {
+  background: rgba(6,11,20,0.97);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--border);
+}
 
 .nav-logo {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 2rem;
-  color: var(--red);
-  letter-spacing: 0.06em;
+  font-family: 'Syne', sans-serif;
+  font-size: 1.05rem;
+  letter-spacing: 0.14em;
   text-decoration: none;
+  background: linear-gradient(90deg, var(--cyan), var(--white));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .nav-links { display: flex; gap: 2rem; list-style: none; }
@@ -88,7 +115,7 @@ nav.scrolled { background: rgba(10,10,10,0.97); backdrop-filter: blur(8px); }
   text-transform: uppercase;
   transition: color 0.2s;
 }
-.nav-links a:hover { color: var(--white); }
+.nav-links a:hover { color: var(--cyan); }
 
 /* ── HERO ── */
 .hero {
@@ -99,42 +126,72 @@ nav.scrolled { background: rgba(10,10,10,0.97); backdrop-filter: blur(8px); }
   justify-content: flex-end;
   padding: 0 4rem 5rem;
   overflow: hidden;
+  z-index: 1;
 }
 
 .hero-bg {
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   background:
-    radial-gradient(ellipse 80% 55% at 65% 35%, rgba(229,9,20,0.13) 0%, transparent 65%),
-    radial-gradient(ellipse 45% 70% at 5% 85%, rgba(229,9,20,0.06) 0%, transparent 60%),
+    radial-gradient(ellipse 75% 60% at 60% 30%, rgba(17,60,252,0.22) 0%, transparent 65%),
+    radial-gradient(ellipse 50% 50% at 5% 85%,  rgba(0,212,255,0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 40% 40% at 90% 70%, rgba(28,231,131,0.06) 0%, transparent 60%),
     var(--black);
 }
 .hero-bg::after {
   content: '';
-  position: absolute;
-  inset: 0;
+  position: absolute; inset: 0;
   background-image:
-    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-  background-size: 60px 60px;
-  mask-image: radial-gradient(ellipse 65% 65% at 75% 25%, black 10%, transparent 75%);
+    linear-gradient(rgba(100,140,255,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(100,140,255,0.04) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse 70% 70% at 70% 25%, black 0%, transparent 80%);
+}
+
+/* animated glow orbs */
+.hero-orb1 {
+  position: absolute;
+  width: 480px; height: 480px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(17,60,252,0.18) 0%, transparent 70%);
+  top: 5%; right: 8%;
+  animation: float1 9s ease-in-out infinite;
+  pointer-events: none;
+}
+.hero-orb2 {
+  position: absolute;
+  width: 280px; height: 280px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0,212,255,0.12) 0%, transparent 70%);
+  top: 30%; right: 22%;
+  animation: float2 12s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes float1 {
+  0%,100% { transform: translate(0,0) scale(1); }
+  33%      { transform: translate(-18px, 22px) scale(1.04); }
+  66%      { transform: translate(12px, -14px) scale(0.97); }
+}
+@keyframes float2 {
+  0%,100% { transform: translate(0,0); }
+  50%      { transform: translate(20px, -25px); }
 }
 
 .hero-eyebrow {
   position: relative;
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  display: flex; align-items: center; gap: 12px;
   margin-bottom: 1.25rem;
   animation: fadeUp 0.8s 0.15s both;
 }
-.nf-n {
-  background: var(--red);
+.dp-badge {
+  background: linear-gradient(135deg, var(--blue), var(--blue-mid));
   color: #fff;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 0.85rem;
-  padding: 3px 9px;
-  letter-spacing: 0.06em;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.72rem;
+  padding: 4px 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: 1px solid rgba(100,140,255,0.3);
+  box-shadow: 0 0 14px rgba(17,60,252,0.5);
 }
 .eyebrow-text {
   font-size: 0.72rem;
@@ -146,40 +203,49 @@ nav.scrolled { background: rgba(10,10,10,0.97); backdrop-filter: blur(8px); }
 
 .hero-title {
   position: relative;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(5rem, 13vw, 11.5rem);
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(4.5rem, 13vw, 11rem);
   line-height: 0.88;
-  letter-spacing: 0.02em;
+  letter-spacing: -0.01em;
   margin-bottom: 0.5rem;
   animation: fadeUp 0.8s 0.3s both;
 }
-.hero-title span { color: var(--red); }
+.hero-title .glow-line {
+  background: linear-gradient(90deg, var(--cyan), var(--white) 55%, var(--white));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.hero-title .dim-line { color: rgba(240,244,255,0.38); }
 
 .hero-subtitle {
   position: relative;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(1.4rem, 3.5vw, 3rem);
-  letter-spacing: 0.2em;
-  color: var(--muted);
+  font-family: 'DM Mono', monospace;
+  font-size: clamp(0.85rem, 2vw, 1.1rem);
+  letter-spacing: 0.3em;
+  color: var(--cyan);
   margin-bottom: 1.75rem;
   animation: fadeUp 0.8s 0.4s both;
+  text-transform: uppercase;
 }
 
 .hero-meta {
   position: relative;
-  display: flex;
-  align-items: center;
-  gap: 14px;
+  display: flex; align-items: center; gap: 14px;
   margin-bottom: 1.5rem;
   animation: fadeUp 0.8s 0.45s both;
   flex-wrap: wrap;
 }
-.match { color: var(--green); font-weight: 500; font-size: 0.875rem; }
+.match {
+  color: var(--hulu);
+  font-weight: 600; font-size: 0.875rem;
+}
 .pill {
   border: 1px solid var(--muted2);
   color: var(--muted);
   font-size: 0.72rem;
   padding: 2px 9px;
+  letter-spacing: 0.08em;
 }
 .dot { color: var(--muted2); font-size: 0.8rem; }
 
@@ -187,59 +253,62 @@ nav.scrolled { background: rgba(10,10,10,0.97); backdrop-filter: blur(8px); }
   position: relative;
   max-width: 520px;
   font-size: 0.975rem;
-  line-height: 1.75;
-  color: rgba(255,255,255,0.72);
+  line-height: 1.8;
+  color: rgba(240,244,255,0.7);
   margin-bottom: 2.5rem;
   animation: fadeUp 0.8s 0.52s both;
 }
 
 .hero-actions {
   position: relative;
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
+  display: flex; gap: 1rem; flex-wrap: wrap;
   animation: fadeUp 0.8s 0.6s both;
 }
 
 .btn-p {
   display: inline-flex; align-items: center; gap: 10px;
-  background: var(--white); color: var(--black);
-  font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 0.95rem;
-  padding: 0.75rem 2rem; border: none; cursor: pointer; text-decoration: none;
-  transition: background 0.2s, transform 0.1s;
+  background: linear-gradient(135deg, var(--blue), var(--cyan-soft));
+  color: #fff;
+  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 600; font-size: 0.95rem;
+  padding: 0.8rem 2.2rem; border: none; cursor: pointer; text-decoration: none;
+  transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
   letter-spacing: 0.02em;
+  border-radius: 4px;
+  box-shadow: 0 4px 24px rgba(17,60,252,0.45);
 }
-.btn-p:hover { background: rgba(255,255,255,0.87); transform: scale(0.99); }
+.btn-p:hover { opacity: 0.92; transform: scale(0.99); box-shadow: 0 6px 32px rgba(0,212,255,0.4); }
 
 .btn-s {
   display: inline-flex; align-items: center; gap: 10px;
-  background: rgba(100,100,100,0.55); color: var(--white);
-  font-family: 'DM Sans', sans-serif; font-weight: 500; font-size: 0.95rem;
-  padding: 0.75rem 2rem; border: none; cursor: pointer; text-decoration: none;
-  transition: background 0.2s;
-  letter-spacing: 0.02em;
+  background: rgba(100,140,255,0.12);
+  color: var(--white);
+  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 500; font-size: 0.95rem;
+  padding: 0.8rem 2.2rem; border: 1px solid var(--border2); cursor: pointer; text-decoration: none;
+  transition: background 0.2s, border-color 0.2s;
+  border-radius: 4px;
 }
-.btn-s:hover { background: rgba(100,100,100,0.38); }
+.btn-s:hover { background: rgba(100,140,255,0.2); border-color: rgba(0,212,255,0.4); }
 
 .scroll-hint {
-  position: absolute;
-  bottom: 2.5rem; right: 4rem;
+  position: absolute; bottom: 2.5rem; right: 4rem;
   display: flex; flex-direction: column; align-items: center; gap: 8px;
-  opacity: 0.35;
+  opacity: 0.3;
   animation: fadeUp 1s 1.2s both;
 }
 .scroll-line {
   width: 1px; height: 44px;
-  background: linear-gradient(to bottom, transparent, var(--white));
-  animation: spulse 2.2s infinite;
+  background: linear-gradient(to bottom, transparent, var(--cyan));
+  animation: spulse 2.4s infinite;
 }
 .scroll-label {
-  font-size: 0.6rem; letter-spacing: 0.18em;
+  font-size: 0.6rem; letter-spacing: 0.2em;
   text-transform: uppercase; writing-mode: vertical-rl;
+  font-family: 'DM Mono', monospace;
+  color: var(--cyan);
 }
 
 /* ── SECTIONS ── */
-section { padding: 5rem 4rem; }
+section { padding: 5rem 4rem; position: relative; z-index: 1; }
 
 .sec-eyebrow {
   display: flex; align-items: center; gap: 14px;
@@ -247,15 +316,17 @@ section { padding: 5rem 4rem; }
 }
 .sec-label {
   font-size: 0.68rem; letter-spacing: 0.28em;
-  text-transform: uppercase; color: var(--muted2); font-weight: 500;
+  text-transform: uppercase; color: var(--cyan); font-weight: 600;
   white-space: nowrap;
+  font-family: 'DM Mono', monospace;
 }
-.sec-line { flex: 1; height: 1px; background: var(--border); }
+.sec-line { flex: 1; height: 1px; background: linear-gradient(90deg, rgba(0,212,255,0.35) 0%, transparent 100%); }
 
 .sec-title {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: clamp(2.2rem, 4.5vw, 3.75rem);
-  letter-spacing: 0.04em;
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
   margin-bottom: 1rem;
   line-height: 1;
 }
@@ -264,28 +335,39 @@ section { padding: 5rem 4rem; }
 #about { background: var(--black); }
 
 .about-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: start;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 4rem; align-items: start;
 }
-.about-text { font-size: 0.975rem; line-height: 1.8; color: rgba(255,255,255,0.78); }
+.about-text {
+  font-size: 0.975rem; line-height: 1.85;
+  color: rgba(240,244,255,0.72);
+}
 .about-text p + p { margin-top: 1.2rem; }
-.hl { color: var(--white); font-weight: 500; }
+.hl { color: var(--white); font-weight: 600; }
+.hl-cyan { color: var(--cyan); font-weight: 500; }
 
 .stats-grid {
   display: grid; grid-template-columns: 1fr 1fr;
-  gap: 1px; background: var(--border);
+  gap: 2px; background: var(--border);
+  border: 1px solid var(--border); border-radius: 6px; overflow: hidden;
 }
-.stat-card { background: var(--surface); padding: 2rem; }
+.stat-card {
+  background: var(--surface); padding: 2rem;
+  transition: background 0.2s;
+}
+.stat-card:hover { background: var(--surface2); }
 .stat-num {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 3.25rem; color: var(--red);
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: 3rem;
+  background: linear-gradient(135deg, var(--cyan), var(--blue-mid));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
   line-height: 1; margin-bottom: 6px;
 }
 .stat-label {
   font-size: 0.75rem; letter-spacing: 0.1em;
   text-transform: uppercase; color: var(--muted2); font-weight: 500;
+  font-family: 'DM Mono', monospace;
 }
 
 /* ── SKILLS ── */
@@ -294,7 +376,8 @@ section { padding: 5rem 4rem; }
 .skills-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 1px; background: var(--border);
+  gap: 2px; background: var(--border);
+  border-radius: 6px; overflow: hidden;
 }
 .skill-cat {
   background: var(--surface2);
@@ -306,17 +389,17 @@ section { padding: 5rem 4rem; }
   content: '';
   position: absolute; top: 0; left: 0;
   width: 3px; height: 100%;
-  background: var(--red);
+  background: linear-gradient(to bottom, var(--cyan), var(--blue));
   transform: scaleY(0); transform-origin: top;
-  transition: transform 0.3s;
+  transition: transform 0.35s;
 }
 .skill-cat:hover { background: var(--surface3); }
 .skill-cat:hover::before { transform: scaleY(1); }
-
 .skill-cat-title {
   font-size: 0.68rem; letter-spacing: 0.2em;
-  text-transform: uppercase; color: var(--red);
-  font-weight: 500; margin-bottom: 1rem;
+  text-transform: uppercase; color: var(--cyan);
+  font-weight: 600; margin-bottom: 1rem;
+  font-family: 'DM Mono', monospace;
 }
 .skill-items { display: flex; flex-direction: column; gap: 6px; }
 .skill-item {
@@ -330,36 +413,48 @@ section { padding: 5rem 4rem; }
 .edu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
 .edu-card {
   border: 1px solid var(--border);
-  padding: 2rem;
-  transition: border-color 0.2s;
+  padding: 2rem; border-radius: 8px;
+  position: relative; overflow: hidden;
+  transition: border-color 0.25s, transform 0.25s;
+  background: var(--surface);
 }
-.edu-card:hover { border-color: var(--border2); }
+.edu-card::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, var(--blue), var(--cyan));
+  opacity: 0; transition: opacity 0.3s;
+}
+.edu-card:hover { border-color: var(--border2); transform: translateY(-3px); }
+.edu-card:hover::after { opacity: 1; }
 .edu-year {
   font-family: 'DM Mono', monospace;
-  font-size: 0.72rem; color: var(--red);
+  font-size: 0.72rem; color: var(--cyan);
   letter-spacing: 0.12em; margin-bottom: 0.75rem;
+  text-transform: uppercase;
 }
 .edu-degree {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.35rem; letter-spacing: 0.05em; margin-bottom: 4px;
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: 1.3rem; letter-spacing: -0.01em; margin-bottom: 4px;
 }
 .edu-uni { font-size: 0.875rem; color: var(--muted); margin-bottom: 1rem; }
 .edu-courses {
   font-size: 0.78rem; color: var(--muted2);
-  line-height: 1.7; font-family: 'DM Mono', monospace;
+  line-height: 1.75; font-family: 'DM Mono', monospace;
 }
 .edu-thesis {
   margin-top: 1rem; padding: 0.875rem;
-  background: rgba(229,9,20,0.07);
-  border-left: 2px solid var(--red);
+  background: rgba(0,212,255,0.06);
+  border-left: 2px solid var(--cyan);
+  border-radius: 0 4px 4px 0;
 }
 .edu-thesis-label {
   font-size: 0.63rem; letter-spacing: 0.16em;
-  text-transform: uppercase; color: var(--red);
-  font-weight: 500; margin-bottom: 5px;
+  text-transform: uppercase; color: var(--cyan);
+  font-weight: 600; margin-bottom: 5px;
+  font-family: 'DM Mono', monospace;
 }
 .edu-thesis-title {
-  font-size: 0.82rem; color: rgba(255,255,255,0.85);
+  font-size: 0.82rem; color: rgba(240,244,255,0.85);
   line-height: 1.55; font-style: italic;
 }
 
@@ -368,7 +463,7 @@ section { padding: 5rem 4rem; }
 
 .seasons-intro {
   max-width: 560px; font-size: 0.925rem;
-  color: var(--muted); line-height: 1.7; margin-bottom: 3rem;
+  color: var(--muted); line-height: 1.75; margin-bottom: 3rem;
 }
 
 .season-list { display: flex; flex-direction: column; gap: 2px; }
@@ -384,47 +479,54 @@ section { padding: 5rem 4rem; }
   cursor: pointer;
   transition: background 0.2s, border-color 0.2s;
   position: relative; overflow: hidden;
+  border-radius: 0;
 }
+.season:first-child { border-radius: 6px 6px 0 0; }
+.season:last-child  { border-radius: 0 0 6px 6px; }
 .season::before {
   content: '';
   position: absolute; inset: 0;
-  background: linear-gradient(90deg, rgba(229,9,20,0.06) 0%, transparent 50%);
+  background: linear-gradient(90deg, rgba(17,60,252,0.1) 0%, transparent 55%);
   opacity: 0; transition: opacity 0.3s;
 }
-.season:hover { background: var(--surface3); border-left-color: var(--red); }
+.season:hover { background: var(--surface3); border-left-color: var(--cyan); }
 .season:hover::before { opacity: 1; }
-.season.open { background: var(--surface3); border-left-color: var(--red); }
+.season.open { background: var(--surface3); border-left-color: var(--cyan); }
 .season.open::before { opacity: 1; }
 
 .s-num {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 2.2rem; color: var(--muted2);
-  line-height: 1; letter-spacing: 0.05em;
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: 2rem; color: var(--muted2);
+  line-height: 1; letter-spacing: 0.04em;
 }
+.season.open .s-num, .season:hover .s-num { color: var(--cyan); }
 
 .s-thumb {
   width: 220px; height: 124px;
-  background: var(--surface3);
+  background: linear-gradient(135deg, var(--surface3) 0%, var(--blue-dark) 100%);
   position: relative; overflow: hidden; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
-}
-.s-thumb-label {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1rem; letter-spacing: 0.12em;
-  color: var(--muted2); position: relative; z-index: 1;
-  text-align: center; padding: 0 12px;
+  border-radius: 4px;
 }
 .s-thumb::before {
   content: '';
   position: absolute; inset: 0;
-  background: linear-gradient(135deg, rgba(229,9,20,0.18) 0%, transparent 55%);
+  background: linear-gradient(135deg, rgba(0,212,255,0.15) 0%, transparent 55%);
+}
+.s-thumb-label {
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: 0.95rem; letter-spacing: 0.08em;
+  color: rgba(240,244,255,0.7); position: relative; z-index: 1;
+  text-align: center; padding: 0 12px;
 }
 .s-thumb-tag {
   position: absolute; bottom: 8px; right: 8px;
-  background: var(--black);
+  background: rgba(6,11,20,0.85);
+  border: 1px solid rgba(0,212,255,0.2);
   font-size: 0.62rem; letter-spacing: 0.1em;
-  padding: 2px 7px; color: var(--white);
+  padding: 2px 7px; color: var(--cyan);
   font-family: 'DM Mono', monospace;
+  border-radius: 2px;
 }
 
 .s-body { flex: 1; }
@@ -433,39 +535,37 @@ section { padding: 5rem 4rem; }
   display: flex; align-items: baseline;
   gap: 12px; margin-bottom: 8px; flex-wrap: wrap;
 }
-.s-name { font-size: 0.975rem; font-weight: 500; color: var(--white); }
+.s-name { font-size: 0.975rem; font-weight: 600; color: var(--white); }
 
 .s-badge {
   font-size: 0.67rem; letter-spacing: 0.08em;
-  text-transform: uppercase; padding: 2px 9px; font-weight: 500;
+  text-transform: uppercase; padding: 3px 10px; font-weight: 600;
+  border-radius: 3px;
 }
-.badge-progress { background: rgba(229,9,20,0.15); color: var(--red); }
-.badge-done { background: rgba(70,211,105,0.13); color: var(--green); }
-.badge-published { background: rgba(255,255,255,0.07); color: var(--muted); }
+.badge-progress { background: rgba(0,212,255,0.12); color: var(--cyan); border: 1px solid rgba(0,212,255,0.25); }
+.badge-done     { background: var(--hulu-soft); color: var(--hulu); border: 1px solid var(--hulu-border); }
+.badge-published{ background: rgba(255,255,255,0.07); color: var(--muted); border: 1px solid var(--border); }
 
 .s-desc {
   font-size: 0.875rem; color: var(--muted);
-  line-height: 1.65; max-width: 560px;
-  display: none;
-  margin-bottom: 10px;
+  line-height: 1.7; max-width: 560px;
+  display: none; margin-bottom: 10px;
 }
 .season.open .s-desc { display: block; }
 
 .s-bullets {
-  display: none;
-  flex-direction: column;
-  gap: 6px;
-  margin-bottom: 12px;
+  display: none; flex-direction: column;
+  gap: 6px; margin-bottom: 12px;
 }
 .season.open .s-bullets { display: flex; }
 .s-bullet {
-  font-size: 0.82rem; color: rgba(255,255,255,0.65);
-  line-height: 1.6; padding-left: 14px; position: relative;
+  font-size: 0.82rem; color: rgba(240,244,255,0.65);
+  line-height: 1.65; padding-left: 16px; position: relative;
 }
 .s-bullet::before {
   content: '—';
   position: absolute; left: 0;
-  color: var(--red); font-size: 0.75rem;
+  color: var(--cyan); font-size: 0.75rem;
 }
 
 .s-stack {
@@ -474,7 +574,7 @@ section { padding: 5rem 4rem; }
 .s-tag {
   font-size: 0.68rem; font-family: 'DM Mono', monospace;
   color: var(--muted2); border: 1px solid var(--border);
-  padding: 2px 9px; letter-spacing: 0.04em;
+  padding: 2px 9px; letter-spacing: 0.04em; border-radius: 2px;
 }
 
 .s-dur {
@@ -484,26 +584,73 @@ section { padding: 5rem 4rem; }
   padding-top: 4px;
 }
 
+/* ── EXPERIENCE ── */
+#experience { background: var(--black); }
+
+.exp-list { display: flex; flex-direction: column; gap: 2px; }
+.exp-item {
+  display: grid; grid-template-columns: 200px 1fr;
+  gap: 2.5rem;
+  padding: 2rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin-bottom: 2px;
+  transition: border-color 0.2s;
+}
+.exp-item:hover { border-color: var(--border2); }
+.exp-left {}
+.exp-period {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem; color: var(--cyan);
+  letter-spacing: 0.08em; margin-bottom: 4px;
+  text-transform: uppercase;
+}
+.exp-type {
+  font-size: 0.7rem; letter-spacing: 0.14em;
+  color: var(--muted2); text-transform: uppercase;
+  font-family: 'DM Mono', monospace;
+}
+.exp-role {
+  font-family: 'Syne', sans-serif; font-weight: 700;
+  font-size: 1.05rem; margin-bottom: 2px;
+}
+.exp-org { font-size: 0.875rem; color: var(--cyan); margin-bottom: 0.75rem; font-weight: 500; }
+.exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.exp-bullets li {
+  font-size: 0.875rem; color: rgba(240,244,255,0.7);
+  padding-left: 1.25rem; position: relative; line-height: 1.65;
+}
+.exp-bullets li::before {
+  content: '—'; position: absolute; left: 0;
+  color: var(--muted2);
+}
+
 /* ── PUBLICATION ── */
-#publication { background: var(--black); padding: 4rem; }
+#publication { background: var(--surface); padding: 4rem; }
 .pub-card {
   display: flex; align-items: center; gap: 2rem;
   padding: 2rem; border: 1px solid var(--border);
-  max-width: 760px; transition: border-color 0.2s;
+  max-width: 760px; transition: border-color 0.2s, transform 0.2s;
+  border-radius: 8px; background: var(--surface2);
 }
-.pub-card:hover { border-color: var(--border2); }
+.pub-card:hover { border-color: rgba(0,212,255,0.35); transform: translateX(4px); }
 .pub-badge {
   flex-shrink: 0; width: 56px; height: 56px;
-  background: var(--red);
+  background: linear-gradient(135deg, var(--blue), var(--blue-mid));
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.05rem; letter-spacing: 0.06em;
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: 0.95rem; letter-spacing: 0.06em;
+  border-radius: 6px;
+  box-shadow: 0 4px 18px rgba(17,60,252,0.45);
 }
 .pub-venue {
   font-size: 0.68rem; letter-spacing: 0.18em;
-  text-transform: uppercase; color: var(--red); margin-bottom: 6px; font-weight: 500;
+  text-transform: uppercase; color: var(--cyan);
+  margin-bottom: 6px; font-weight: 600;
+  font-family: 'DM Mono', monospace;
 }
-.pub-title { font-size: 0.975rem; font-weight: 500; color: var(--white); line-height: 1.45; }
+.pub-title { font-size: 0.975rem; font-weight: 600; color: var(--white); line-height: 1.45; }
 .pub-year {
   font-size: 0.78rem; color: var(--muted2);
   margin-top: 6px; font-family: 'DM Mono', monospace;
@@ -519,14 +666,19 @@ section { padding: 5rem 4rem; }
 #contact::before {
   content: '';
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse 55% 55% at 50% 110%, rgba(229,9,20,0.12) 0%, transparent 70%);
+  background:
+    radial-gradient(ellipse 55% 55% at 50% 110%, rgba(17,60,252,0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 30% 30% at 50% 100%, rgba(0,212,255,0.1) 0%, transparent 65%);
 }
 .contact-title {
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: 'Syne', sans-serif; font-weight: 800;
   font-size: clamp(3rem, 8vw, 7rem);
-  letter-spacing: 0.04em;
+  letter-spacing: -0.01em;
   position: relative; margin-bottom: 1rem;
-  line-height: 0.95;
+  line-height: 0.93;
+  background: linear-gradient(135deg, var(--white) 0%, var(--cyan) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 .contact-sub {
   font-size: 0.975rem; color: var(--muted);
@@ -538,16 +690,21 @@ section { padding: 5rem 4rem; }
 }
 .c-link {
   display: inline-flex; align-items: center; gap: 8px;
-  padding: 0.75rem 1.75rem;
+  padding: 0.8rem 1.85rem;
   border: 1px solid var(--border2);
   color: var(--white); text-decoration: none;
-  font-size: 0.82rem; font-weight: 500;
+  font-size: 0.82rem; font-weight: 600;
   letter-spacing: 0.1em; text-transform: uppercase;
   transition: background 0.2s, border-color 0.2s;
+  border-radius: 4px;
 }
-.c-link:hover { background: rgba(255,255,255,0.07); }
-.c-link.primary { background: var(--red); border-color: var(--red); }
-.c-link.primary:hover { background: var(--red-dark); border-color: var(--red-dark); }
+.c-link:hover { background: rgba(100,140,255,0.12); border-color: rgba(0,212,255,0.4); }
+.c-link.primary {
+  background: linear-gradient(135deg, var(--blue), var(--cyan-soft));
+  border-color: transparent;
+  box-shadow: 0 4px 22px rgba(17,60,252,0.4);
+}
+.c-link.primary:hover { opacity: 0.9; box-shadow: 0 6px 28px rgba(0,212,255,0.4); }
 
 /* ── FOOTER ── */
 footer {
@@ -557,8 +714,11 @@ footer {
   border-top: 1px solid var(--border);
 }
 .footer-logo {
-  font-family: 'Bebas Neue', sans-serif;
-  font-size: 1.5rem; color: var(--red); letter-spacing: 0.06em;
+  font-family: 'Syne', sans-serif; font-weight: 800;
+  font-size: 1.4rem; letter-spacing: 0.04em;
+  background: linear-gradient(90deg, var(--cyan), var(--white));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 .footer-copy {
   font-size: 0.78rem; color: var(--muted2);
@@ -571,8 +731,8 @@ footer {
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes spulse {
-  0%, 100% { opacity: 0.3; transform: scaleY(1); }
-  50%       { opacity: 0.9; transform: scaleY(1.15); }
+  0%, 100% { opacity: 0.25; transform: scaleY(1); }
+  50%       { opacity: 0.9;  transform: scaleY(1.18); }
 }
 
 .reveal {
@@ -591,6 +751,7 @@ footer {
   .edu-grid { grid-template-columns: 1fr; }
   .season { grid-template-columns: 48px 1fr auto; }
   .s-thumb { display: none; }
+  .exp-item { grid-template-columns: 1fr; gap: 0.5rem; }
   footer { flex-direction: column; gap: 1rem; text-align: center; }
   #publication, #contact { padding: 3.5rem 1.5rem; }
 }
@@ -602,12 +763,13 @@ footer {
 
 <!-- NAV -->
 <nav id="nav">
-  <a href="#" class="nav-logo" style="font-size:1.1rem;letter-spacing:0.12em;">JACK OF ALL TRADES</a>
+  <a href="#" class="nav-logo">RANJITHA RANI</a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#education">Origin Story</a></li>
     <li><a href="#seasons">Seasons</a></li>
+    <li><a href="#experience">Experience</a></li>
     <li><a href="#publication">Publication</a></li>
     <li><a href="#contact">Connect</a></li>
   </ul>
@@ -616,14 +778,19 @@ footer {
 <!-- HERO -->
 <section class="hero" id="home">
   <div class="hero-bg"></div>
+  <div class="hero-orb1"></div>
+  <div class="hero-orb2"></div>
 
   <div class="hero-eyebrow">
-    <span class="nf-n">N</span>
-    <span class="eyebrow-text">Original Series &nbsp;·&nbsp; MS Computer Science &nbsp;·&nbsp; University of Oregon</span>
+    <span class="dp-badge">Original Series</span>
+    <span class="eyebrow-text">MS Computer Science &nbsp;·&nbsp; University of Oregon</span>
   </div>
 
-  <h1 class="hero-title">RANJITHA<br><span>RANI</span></h1>
-  <div class="hero-subtitle">SWE &nbsp; IN &nbsp; MAKING</div>
+  <h1 class="hero-title">
+    <span class="glow-line">RANJITHA</span><br>
+    <span class="dim-line">RANI</span>
+  </h1>
+  <div class="hero-subtitle">SWE &nbsp;·&nbsp; IN &nbsp;·&nbsp; MAKING</div>
 
   <div class="hero-meta">
     <span class="match">97% Match</span>
@@ -661,9 +828,9 @@ footer {
       <h2 class="sec-title reveal">The engineer<br>behind the stack</h2>
       <div class="about-text reveal">
         <p>I'm a <span class="hl">Master's student in Computer Science at the University of Oregon</span>, originally from Bengaluru, India. I completed my B.Tech at PES University before crossing the world to work on problems that don't have textbook answers.</p>
-        <p>My thesis is building <span class="hl">SAM CFT</span> — a novel crash fault tolerance protocol for disaggregated memory using RDMA. It sits at the intersection of distributed systems, hardware architecture, and consensus theory. That's the kind of intersection I like.</p>
+        <p>My thesis is building <span class="hl-cyan">SAM CFT</span> — a novel crash fault tolerance protocol for disaggregated memory using RDMA. It sits at the intersection of distributed systems, hardware architecture, and consensus theory. That's the kind of intersection I like.</p>
         <p>I work across the full stack — from <span class="hl">low-level C/C++ memory protocols</span> to cloud-native Kubernetes infrastructure to React frontends. JavaScript, TypeScript, Java, Go, Python — whatever the system needs.</p>
-        <p>Looking for <span class="hl">Summer 2026 internships</span> where the problems are hard and the systems actually matter.</p>
+        <p>Looking for <span class="hl-cyan">Summer 2026 internships</span> where the problems are hard and the systems actually matter.</p>
       </div>
     </div>
     <div class="stats-grid reveal">
@@ -715,7 +882,7 @@ footer {
       </div>
     </div>
     <div class="skill-cat reveal">
-      <div class="skill-cat-title">API & Integration</div>
+      <div class="skill-cat-title">API &amp; Integration</div>
       <div class="skill-items">
         <span class="skill-item">RESTful APIs</span>
         <span class="skill-item">GraphQL · gRPC</span>
@@ -733,7 +900,7 @@ footer {
       </div>
     </div>
     <div class="skill-cat reveal">
-      <div class="skill-cat-title">Cloud & Observability</div>
+      <div class="skill-cat-title">Cloud &amp; Observability</div>
       <div class="skill-items">
         <span class="skill-item">AWS (EC2, RDS, Lambda…)</span>
         <span class="skill-item">Docker · Kubernetes</span>
@@ -754,7 +921,7 @@ footer {
   </div>
 </section>
 
-<!-- EDUCATION / ORIGIN STORY -->
+<!-- EDUCATION -->
 <section id="education">
   <div class="sec-eyebrow reveal">
     <span class="sec-label">Education</span>
@@ -763,7 +930,7 @@ footer {
   <h2 class="sec-title reveal">Origin story</h2>
   <div class="edu-grid">
     <div class="edu-card reveal">
-      <div class="edu-year">SEP 2024 – PRESENT</div>
+      <div class="edu-year">Sep 2024 – Present</div>
       <div class="edu-degree">Master of Science<br>Computer Science</div>
       <div class="edu-uni">University of Oregon · Eugene, USA</div>
       <div class="edu-courses">Algorithms &amp; Complexity · Database Processing · Data Mining · Data Science · Large Scale Systems · Probabilistic Methods in AI · GPU Programming</div>
@@ -773,7 +940,7 @@ footer {
       </div>
     </div>
     <div class="edu-card reveal">
-      <div class="edu-year">AUG 2020 – MAY 2024</div>
+      <div class="edu-year">Aug 2020 – May 2024</div>
       <div class="edu-degree">Bachelor of Technology<br>Computer Science</div>
       <div class="edu-uni">PES University · Bengaluru, India</div>
       <div class="edu-courses">Data Structures · Algorithms · Operating Systems · DBMS · Software Engineering · Cloud Computing · Data Analytics · Big Data · Web Development · Networks</div>
@@ -792,7 +959,6 @@ footer {
 
   <div class="season-list">
 
-    <!-- S1 -->
     <div class="season reveal" onclick="toggleSeason(this)">
       <div class="s-num">S1</div>
       <div class="s-thumb">
@@ -807,7 +973,7 @@ footer {
         <div class="s-desc">A React and TypeScript single-page application built from scratch. RESTful API integration, component-based architecture, UX-first design. Third-party service and vendor integration baked in — the kind of frontend that doesn't apologise for being engineered.</div>
         <div class="s-bullets">
           <div class="s-bullet">Designed and built a React and TypeScript SPA with RESTful API integration, component-based architecture, and UX-first design — demonstrating end-to-end full-stack ownership from ideation through deployment.</div>
-          <div class="s-bullet">Implemented responsive UI with clean OOP JavaScript class patterns, ensuring consistent UX across devices following modern design patterns and frontend best practices.</div>
+          <div class="s-bullet">Implemented responsive UI with clean OOP JavaScript patterns, ensuring consistent UX across devices following modern design patterns and frontend best practices.</div>
           <div class="s-bullet">Integrated third-party services and APIs into the platform layer, maintaining scalability and flexibility analogous to hybrid vendor-integrated architectures.</div>
         </div>
         <div class="s-stack">
@@ -817,7 +983,6 @@ footer {
       <div class="s-dur">Full Stack</div>
     </div>
 
-    <!-- S2 -->
     <div class="season reveal" onclick="toggleSeason(this)">
       <div class="s-num">S2</div>
       <div class="s-thumb">
@@ -833,7 +998,7 @@ footer {
         <div class="s-bullets">
           <div class="s-bullet">Built a full-stack platform with Java backend services, GraphQL and RESTful APIs, and a JavaScript/TypeScript frontend — delivering a scalable, maintainable member management system with real-time data access.</div>
           <div class="s-bullet">Designed normalized DB schema, indexing strategies, and query optimization in PostgreSQL and MySQL, supporting efficient metadata management and multi-user operational workflows.</div>
-          <div class="s-bullet">Integrated internal backend services with a web frontend using modern design patterns and OOP principles, delivering a production-ready hybrid platform supporting end-to-end lifecycle management.</div>
+          <div class="s-bullet">Integrated internal backend services with a web frontend using modern design patterns and OOP principles, delivering a production-ready hybrid platform.</div>
         </div>
         <div class="s-stack">
           <span class="s-tag">Java</span><span class="s-tag">JavaScript</span><span class="s-tag">TypeScript</span><span class="s-tag">PostgreSQL</span><span class="s-tag">MySQL</span><span class="s-tag">GraphQL</span><span class="s-tag">REST</span>
@@ -842,7 +1007,6 @@ footer {
       <div class="s-dur">Full Stack</div>
     </div>
 
-    <!-- S3 -->
     <div class="season reveal" onclick="toggleSeason(this)">
       <div class="s-num">S3</div>
       <div class="s-thumb">
@@ -858,7 +1022,7 @@ footer {
         <div class="s-bullets">
           <div class="s-bullet">Architected a cloud-native platform layer on AWS with Kubernetes orchestration, building abstraction layers for microservice workload generation and service mesh integration at scale.</div>
           <div class="s-bullet">Built SLO-aligned observability pipelines using Prometheus and Grafana, monitoring reliability, latency, and throughput — enabling rapid debugging of production issues across multiple service levels.</div>
-          <div class="s-bullet">Delivered CI/CD build tooling and delivery automation scripts, driving operational efficiency and reliability across dynamic distributed environments through iterative releases.</div>
+          <div class="s-bullet">Delivered CI/CD build tooling and delivery automation scripts, driving operational efficiency and reliability across dynamic distributed environments.</div>
         </div>
         <div class="s-stack">
           <span class="s-tag">Python</span><span class="s-tag">Go</span><span class="s-tag">Docker</span><span class="s-tag">Kubernetes</span><span class="s-tag">AWS</span><span class="s-tag">Prometheus</span><span class="s-tag">Grafana</span><span class="s-tag">Kafka</span>
@@ -867,7 +1031,6 @@ footer {
       <div class="s-dur">Cloud Infra</div>
     </div>
 
-    <!-- S4 -->
     <div class="season reveal" onclick="toggleSeason(this)">
       <div class="s-num">S4</div>
       <div class="s-thumb">
@@ -891,7 +1054,6 @@ footer {
       <div class="s-dur">AI / ML</div>
     </div>
 
-    <!-- S5 -->
     <div class="season reveal" onclick="toggleSeason(this)">
       <div class="s-num">S5</div>
       <div class="s-thumb">
@@ -915,7 +1077,6 @@ footer {
       <div class="s-dur">Systems</div>
     </div>
 
-    <!-- S6 -->
     <div class="season reveal" onclick="toggleSeason(this)">
       <div class="s-num">S6</div>
       <div class="s-thumb">
@@ -937,6 +1098,65 @@ footer {
         </div>
       </div>
       <div class="s-dur">MS Thesis</div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="sec-eyebrow reveal">
+    <span class="sec-label">Experience</span>
+    <div class="sec-line"></div>
+  </div>
+  <h2 class="sec-title reveal">Where I've worked</h2>
+  <div class="exp-list">
+
+    <div class="exp-item reveal">
+      <div class="exp-left">
+        <div class="exp-period">Jun 2025 – Present</div>
+        <div class="exp-type">Research</div>
+      </div>
+      <div>
+        <div class="exp-role">Student Researcher</div>
+        <div class="exp-org">DiStopia Lab · University of Oregon</div>
+        <ul class="exp-bullets">
+          <li>Conducting distributed systems research at the DiStopia lab, focused on fault-tolerant memory architectures and RDMA-based consensus</li>
+          <li>Designing and prototyping SAM CFT — a crash fault-tolerant consensus protocol for disaggregated memory</li>
+          <li>Collaborating with faculty and PhD researchers toward publication-level systems work</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-left">
+        <div class="exp-period">Mar 2025 – Jun 2026<br><span style="opacity:0.6">(OS: Mar–Jun 2026)</span></div>
+        <div class="exp-type">Teaching</div>
+      </div>
+      <div>
+        <div class="exp-role">Graduate Teaching Assistant</div>
+        <div class="exp-org">Dept. of Data Science &amp; Operating Systems · University of Oregon</div>
+        <ul class="exp-bullets">
+          <li>TA for Department of Data Science (Mar 2025 – Mar 2026): office hours, grading, and coursework support</li>
+          <li>TA for Operating Systems (Mar 2026 – Jun 2026): systems-level programming, Linux internals, scheduling &amp; memory management</li>
+          <li>Mentored graduate and undergraduate students through complex data pipeline and OS topics</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-left">
+        <div class="exp-period">Jan 2024 – Jun 2024</div>
+        <div class="exp-type">Teaching</div>
+      </div>
+      <div>
+        <div class="exp-role">Undergraduate Teaching Assistant — Cloud Computing</div>
+        <div class="exp-org">PES University</div>
+        <ul class="exp-bullets">
+          <li>Led lab sessions covering AWS, Docker containerisation, and distributed architecture design</li>
+          <li>Supported students through hands-on cloud deployments and system design assignments</li>
+        </ul>
+      </div>
     </div>
 
   </div>
@@ -976,7 +1196,6 @@ footer {
 </footer>
 
 <script>
-  // Progress bar
   window.addEventListener('scroll', () => {
     const h = document.documentElement;
     const pct = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
@@ -984,7 +1203,6 @@ footer {
     document.getElementById('nav').classList.toggle('scrolled', h.scrollTop > 60);
   });
 
-  // Reveal on scroll
   const obs = new IntersectionObserver((entries) => {
     entries.forEach((e, i) => {
       if (e.isIntersecting) {
@@ -995,7 +1213,6 @@ footer {
   }, { threshold: 0.08 });
   document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
 
-  // Season toggle
   function toggleSeason(el) {
     const wasOpen = el.classList.contains('open');
     document.querySelectorAll('.season').forEach(s => s.classList.remove('open'));
